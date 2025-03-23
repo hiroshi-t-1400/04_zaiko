@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Implementations;
 
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Collection;
+use App\Repositories\Constracts\ItemRepositoryInterface;
 
 class ItemRepository implements ItemRepositoryInterface
 {
@@ -46,7 +47,7 @@ class ItemRepository implements ItemRepositoryInterface
      */
     public function store(array $item): Item
     {
-        return Item::create(array $item);
+        return Item::create($item);
     }
 
     /**

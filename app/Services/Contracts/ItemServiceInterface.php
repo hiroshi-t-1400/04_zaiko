@@ -3,7 +3,6 @@
 namespace App\Services\Contracts;
 
 use App\Models\Item;
-use Illuminate\Database\Eloquent\Collection as Collection;
 
 Interface ItemServiceInterface
 {

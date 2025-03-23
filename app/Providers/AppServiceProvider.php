@@ -1,20 +1,29 @@
 <?php
 
 namespace App\Providers;
+use App\Repositories\Implementations\ItemRepository;
+use App\Repositories\Constracts\ItemRepositoryInterface;
+use App\Services\Contracts\ItemServiceInterface;
+use App\Services\Implementations\ItemService;
 
 use Illuminate\Support\ServiceProvider;
-use App\Repositories\ItemRepository;
-use App\Repositories\ItemRepositoryInterface;
+
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
+     * アプリ起動時に実行される
      */
     public function register(): void
     {
-        //
+
+        //ItemRepositryInterfaceにItemRepositoryをバインドする
         $this->app->bind(ItemRepositoryInterface::class, ItemRepository::class);
+
+        //ItemServiceInterfaceにItemServiceをバインドする
+        $this->app->bind(ItemServiceInterface::class, ItemService::class);
+
     }
 
     /**
@@ -23,6 +32,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        
+
     }
 }

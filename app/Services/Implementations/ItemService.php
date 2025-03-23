@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Implementaions;
+namespace App\Services\Implementations;
 
 use App\Models\Item;
 use App\Services\Contracts\ItemServiceInterface;
-use App\Repository\Constracts\ItemRepositoryInterface;
+use App\Repositories\Constracts\ItemRepositoryInterface;
 
 
 class ItemService implements ItemServiceInterface
@@ -13,7 +13,8 @@ class ItemService implements ItemServiceInterface
     // protected $itemRepository;
 
     /**
-     * より厳密に$itemRepositoryを定義？
+     * クラス内でのみ参照されるItemRepositoryInterfaceインスタンスを生成する
+     *
      *
      * @param ItemRepositoryInterface $itemRepository
      */

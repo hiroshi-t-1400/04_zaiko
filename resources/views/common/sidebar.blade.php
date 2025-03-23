@@ -8,7 +8,7 @@
     </div>
 
     <div class="nav-wrappper grid gap-2">
-        <a href="{{ route('items.register') }}">商品登録画面</a>
+        <a href="{{ route('items.create') }}">商品登録画面</a>
 
     </div>
 

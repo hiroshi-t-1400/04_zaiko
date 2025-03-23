@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Constracts;
 
 use App\Models\Item;
-use Illuminate\Database\Eloquent\Collection;
 
 Interface ItemRepositoryInterface
 {
