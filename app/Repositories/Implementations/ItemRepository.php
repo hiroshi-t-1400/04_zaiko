@@ -11,12 +11,12 @@ class ItemRepository implements ItemRepositoryInterface
     /**
      * 商品全件取得
      *
-     * @return Collection
+     * @return Collection|null
      */
-    // public function getAll(): Collection
-    // {
-    //     return Item::all();
-    // }
+    public function getAll(): Collection
+    {
+        return Item::all();
+    }
 
     /**
      * idで商品を取得

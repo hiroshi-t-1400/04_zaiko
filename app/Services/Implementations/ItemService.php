@@ -5,7 +5,7 @@ namespace App\Services\Implementations;
 use App\Models\Item;
 use App\Services\Contracts\ItemServiceInterface;
 use App\Repositories\Constracts\ItemRepositoryInterface;
-
+use Illuminate\Database\Eloquent\Collection;
 
 class ItemService implements ItemServiceInterface
 {
@@ -24,10 +24,10 @@ class ItemService implements ItemServiceInterface
 
 
 
-    // public function getAll(): Collection
-    // {
-    //     return $this->itemRepository->getAll();
-    // }
+    public function getAll(): Collection
+    {
+        return $this->itemRepository->getAll();
+    }
 
     public function store (array $item): Item
     {

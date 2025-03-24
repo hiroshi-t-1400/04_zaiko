@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Item;
 
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
+use App\Services\Contracts\ItemServiceInterface;
 
 class ItemController extends Controller
 {
@@ -13,13 +15,25 @@ class ItemController extends Controller
     ) {}
 
     /**
+     * 商品一覧画面の表示
+     *
+     * @return void
+     */
+    public function index(): Response
+    {
+        $items = $this->itemService->getAll();
+
+        return response()->view('items.index', compact('items'));
+    }
+
+    /**
      * 商品登録画面の表示
      *
      * @return void
      */
-    public function create()
+    public function create(): Response
     {
-        return view('items.create');
+        return response()->view('items.create');
     }
 
     /**
@@ -34,5 +48,26 @@ class ItemController extends Controller
         // return redirect()->route('item.index');
         return redirect('home');
     }
+
+
+    public function show(Request $request)
+    {
+        return redirect()->route('items.show');
+    }
+
+    // public function edit()
+    // {
+    //     return redirect()->route('items.edit');
+    // }
+
+    // public function update(UpdateItemRequest $request)
+    // {
+    //     return redirect('items.index');
+    // }
+
+    // public function destroy($id)
+    // {
+    //     return redirect('items.index');
+    // }
 
 }
