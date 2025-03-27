@@ -23,6 +23,7 @@
                             <th class="border boder-gray-500 px-3">購入日</th>
                             <th class="border boder-gray-500 px-3">価格</th>
                             <th class="border boder-gray-500 px-3">カテゴリ</th>
+                            <th class="border boder-gray-500 px-3">操作</th>
                         </tr>
                     </thead>
 
@@ -35,6 +36,11 @@
                                 <td  class="border boder-gray-500 px-3">{{ $item->buy_date }}</td>
                                 <td  class="border boder-gray-500 px-3">{{ $item->price }}</td>
                                 <td  class="border boder-gray-500 px-3">{{ $item->category_id }}</td>
+
+                                <td  class="border boder-gray-500 px-3">
+                                    <button type="submit" name="edit_id" value="{{ $item->id }}" formaction="{{ route('items.edit') }}">編集@csrf</button>
+                                    {{-- <button type="submit" name="destroy_id" value="{{ $item->id }}" formaction="{{ route('items.destroy') }}">削除@csrf</button> --}}
+                                </td>
                             </tr>
                         </tbody>
                     @endforeach

@@ -24,21 +24,10 @@ class ItemRepository implements ItemRepositoryInterface
      * @param [type] $id
      * @return Item|null
      */
-    // public function getById($id): ?Item
-    // {
-    //     return Item::find($id);
-    // }
-
-    /**
-     *idで商品を取得 FindOrFail
-     *
-     * @param [type] $id
-     * @return Item
-     */
-    // public function getByIdOrFail($id): Item
-    // {
-    //     return Item::findOrFail($id);
-    // }
+    public function getById($id): ?Item // ? はnullable
+    {
+        return Item::find($id);
+    }
 
     /**
      * レコードを追加
@@ -53,12 +42,12 @@ class ItemRepository implements ItemRepositoryInterface
     /**
      * レコード修正
      *
-     * @return Item|false
+     * @return bool
      */
-    // public function modify(): Item|false
-    // {
-    //     return false;
-    // }
+    public function modify(array $item): bool
+    {
+        return Item::update($item);
+    }
 
     /**
      * レコード削除
@@ -66,10 +55,10 @@ class ItemRepository implements ItemRepositoryInterface
      * @param [type] $id
      * @return boolean
      */
-    // public function remove($id): bool
-    // {
-    //     return Item::destroy($id);
-    // }
+    public function remove($id): bool
+    {
+        return Item::destroy($id);
+    }
 
     /**
      * レコードの複数削除
@@ -77,11 +66,11 @@ class ItemRepository implements ItemRepositoryInterface
      * @param [type] $ids
      * @return boolean
      */
-    // public function removeMultiple($ids): bool
-    // {
-    //     // where('') idカラムから$idsを抽出し、deleteメソッドを実行
-    //     return Item::where('id', $ids)->delete();
-    // }
+    public function removeMultiple($ids): int|bool
+    {
+        // where('') idカラムから$idsを抽出し、deleteメソッドを実行
+        return Item::where('id', $ids)->delete();
+    }
 
 
 }
