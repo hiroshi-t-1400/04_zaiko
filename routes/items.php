@@ -13,3 +13,7 @@ Route::post('/items/edit', [ItemController::class, 'edit'])->name('items.edit');
 Route::get('/items/{$id}/', [ItemController::class, 'show'])->name('items.show');
 // Route::delete('/items/destroy/{$id}', [ItemController::class, 'delete'])->name('items.destroy');
 
+Route::get('/cindex', function () {
+    return view('items.cindex');
+});
+
