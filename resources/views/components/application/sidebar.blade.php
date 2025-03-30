@@ -7,9 +7,9 @@
         <a href="" class="font-bold">テック太郎</a>
     </div>
 
-    @foreach ($links as $link)
+    @foreach ($navigationLinks as $link)
         <div class="nav-wrapper grid gap-2">
-            <a href="{{ $link['route_name'] }}">{{ $link['label'] }}</a>
+            <a href="{{ route($link->route_name) }}">{{ $link->label }}</a>
         </div>
     @endforeach
 
