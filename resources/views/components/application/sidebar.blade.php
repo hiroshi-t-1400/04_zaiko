@@ -13,17 +13,8 @@
         </div>
     @endforeach
 
-
-    {{--
-    <div class="nav-wrappper grid gap-2">
-        <a href="{{ route('items.index') }}">商品一覧</a>
-    </div>
-
-
     <div class="nav-wrappper grid gap-2">
         <a href="{{ route('home') }}">ホーム画面</a>
     </div>
-    --}}
-
 
 </div>
