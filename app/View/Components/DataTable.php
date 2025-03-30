@@ -10,22 +10,20 @@ use App\Models\Item;
 
 class DataTable extends Component
 {
-    public $labels;
+    public $tableHeaders;
     public $items;
 
     /**
      * Create a new component instance.
      */
     public function __construct(
-        array $labels,
+        array $tableHeaders,
         $items
         )
     {
         // このタイプ次第で、何のテーブルを呼び出すのか
-        $this->labels = $labels;
+        $this->tableHeaders = $tableHeaders;
         $this->items = $items;
-
-        // $this->label = $label;
 
     }
 

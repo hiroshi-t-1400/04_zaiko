@@ -6,12 +6,14 @@ use App\Http\Requests\StoreItemRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use App\Services\Contracts\ItemServiceInterface;
+use App\Services\Contracts\TableDisplayServiceInterface;
 
 class ItemController extends Controller
 {
 
     public function __construct(
-        private readonly ItemServiceInterface $itemService
+        private readonly ItemServiceInterface $itemService,
+        private readonly TableDisplayServiceInterface $tableDisplayService
     ) {}
 
     /**
@@ -23,7 +25,10 @@ class ItemController extends Controller
     {
         $items = $this->itemService->getAll();
 
-        return response()->view('items.index', compact('items'));
+        $this->tableDisplayService->setHeaders(['name_ja', 'quantity', 'unit_of_measure', 'buy_date', 'price', 'category_id',], 'items');
+        $tableHeaders = $this->tableDisplayService->getHeaders();
+
+        return response()->view('items.index', compact('tableHeaders', 'items'));
     }
 
     /**
@@ -58,7 +63,7 @@ class ItemController extends Controller
      */
     public function store(StoreItemRequest $request)
     {
-        dd($request);
+        // dd($request);
 
         $this->itemService->store($request->validated());
         return redirect()->route('items.index');
