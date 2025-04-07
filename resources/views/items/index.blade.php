@@ -8,7 +8,7 @@
 
         <div class="items-index-wrapper">
 
-            <x-data-table :tableHeaders="$tableHeaders" :items="$items" />
+            <x-data-table :tableHeaders="$tableHeaders" :items="$items" :options="$options" />
 
         </div>
 

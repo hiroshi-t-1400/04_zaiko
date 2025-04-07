@@ -24,11 +24,59 @@ class ItemController extends Controller
     public function index(): Response
     {
         $items = $this->itemService->getAll();
+        $tableHeaders = $this->tableDisplayService
+            ->setHeaders([
+                'id',
+                'name_ja',
+                'quantity',
+                'unit_of_measure',
+                'buy_date',
+                'price',
+                'category_id'
+            ], 'items')
+            ->getHeaders();
+        $items = $this->tableDisplayService
+            ->setData($items)
+            ->getData();
 
-        $this->tableDisplayService->setHeaders(['name_ja', 'quantity', 'unit_of_measure', 'buy_date', 'price', 'category_id',], 'items');
-        $tableHeaders = $this->tableDisplayService->getHeaders();
+        $options = [
+            'edit' =>
+                $this->tableDisplayService
+                    ->addAction('button', '編集', 'items.edit', [
+                        'method' => 'POST',
+                        'attributes' => [
+                            'class' => [
+                                'bg-blue-700',
+                                'hover:bg-blue-600',
+                                'text-white',
+                                'rounded',
+                                'px-4',
+                                'py-2',
+                            ],
+                        ],
+                    ]),
+            'delete' =>
+                $this->tableDisplayService
+                    ->addAction('button', '削除', 'items.destroy', [
+                        'method' => 'DELETE',
+                        'attributes' => [
+                            'class' => [
+                                'bg-gray-700',
+                                'hover:bg-gray-600',
+                                'text-white',
+                                'rounded',
+                                'px-4',
+                                'py-2'
+                            ],
+                        ],
+                        'confirm' => '削除してよろしいですか？',
+                    ]),
+        ];
 
-        return response()->view('items.index', compact('tableHeaders', 'items'));
+        return response()->view('items.index', compact('items', 'tableHeaders', 'options'));
+        // return response()->view('items.index', [
+        //     'table' => $this->tableDisplayService->generateTable($headers, $data, $options),
+        // ]);
     }
 
     /**

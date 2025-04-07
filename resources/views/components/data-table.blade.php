@@ -1,31 +1,43 @@
-{{-- template --}}
-{{-- コントローラーから呼び出すとき --}}
-{{--
-public function () {
-    $items = Item::all();
-    $tableHeaders = ['name_ja', 'quantity', 'unit_of_measure', 'buy_date', 'price', 'category_id',]
-    return view('items.index' compact('items', 'tableHeaders'));
-}
---}}
-
-
+<button type="submit"  ></button>
 <table class="border-collapse border border-gray-600">
     <thead>
         <tr>
             @foreach ($tableHeaders as $tableHeader)
-            <th class="border boder-gray-500 px-3">{{ $tableHeader['displayName'] }}</th>
+                <th class="border border-gray-500 px-3">{{ $tableHeader['displayName'] }}</th>
             @endforeach
+            @if (!empty($options))
+                {{-- <th>操作</th> --}}
+            @endif
         </tr>
     </thead>
 
     <tbody>
-        @foreach ($items as $item)
+        @foreach ($items as $row)
             <tr>
-                @foreach ($tableHeaders as $tableHeader)
-
-                {{-- @dd($item->$header) --}}
-                <td class="border boder-gray-500 px-3">{{ $item->{$tableHeader['column']} }}</td>
+                @foreach($row as $cell)
+                    <td  class="border border-gray-500 px-3">{{ $cell }}</td>
                 @endforeach
+
+                @if(!empty($options))
+                    @foreach($options as $key => $action)
+                        <td class="border border-gray-500 px-3">
+                            @if ($action['type'] === 'link')
+                                <a href="{{ $action['url']($row) }}" class="{{ $action['attributes']['class'] }}" >{{ $action['label'] }}</a>
+                            @elseif ($action['type'] === 'button')
+                                <form action="{{ $action['url']($row) }}" method="POST">
+                                    @csrf
+                                    @method($action['method'] ?? 'POST')
+
+                                    <button type="submit"
+                                        @if($key === "delete")
+                                            onclick="return confirm('{{ $action['confirm'] ?? '実行しますか？' }}')"
+                                        @endif
+                                     class="{{ $action['attributes']['class'] }}" >{{ $action['label'] }}</button>
+                                </form>
+                            @endif
+                        </td>
+                    @endforeach
+                @endif
             </tr>
         @endforeach
     </tbody>

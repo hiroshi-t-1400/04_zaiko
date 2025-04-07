@@ -6,25 +6,28 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Item;
+use Illuminate\Support\Collection;
+
+
 
 class DataTable extends Component
 {
     public $tableHeaders;
     public $items;
+    public $options;
 
     /**
      * Create a new component instance.
      */
     public function __construct(
         array $tableHeaders,
-        $items
+        array|Collection $items,
+        array $options
         )
     {
-        // このタイプ次第で、何のテーブルを呼び出すのか
         $this->tableHeaders = $tableHeaders;
         $this->items = $items;
-
+        $this->options = $options;
     }
 
     /**

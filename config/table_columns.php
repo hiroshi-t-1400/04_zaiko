@@ -2,6 +2,7 @@
 
 return [
     'items' => [
+        'id' => 'ID',
         'name_ja' => '商品名',
         'quantity' => '数量',
         'unit_of_measure' => '単位',
