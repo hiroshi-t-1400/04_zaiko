@@ -12,7 +12,7 @@
 
             <div class="items-form-wrapper">
 
-                <form action="{{ route('items.store') }}" method="POST" class="">
+                <form action="{{ route('items.store', $item->id) }}" method="POST" class="">
                     <div class="items-form-inner grid grid-cols-2 gap-5 [&_input]:w-90">
                         @csrf
 
@@ -50,7 +50,7 @@
 
                         <div class="">
                             <label for="price" class="font-semibold text-xl">価格</label>
-                            <input type="text" name="price" id="price" value={{ old('price', $item->pirce) }}  class="rounded-xl outline-2 outline-gray-600 py-2 px-4 m-0.5 mb-4 text-xl ">
+                            <input type="text" name="price" id="price" value="{{ old('price', $item->pirce) }}"  class="rounded-xl outline-2 outline-gray-600 py-2 px-4 m-0.5 mb-4 text-xl ">
                         </div>
 
                         <div class="">

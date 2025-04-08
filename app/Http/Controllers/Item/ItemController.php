@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use App\Services\Contracts\ItemServiceInterface;
 use App\Services\Contracts\TableDisplayServiceInterface;
+use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
@@ -43,15 +44,15 @@ class ItemController extends Controller
             'edit' =>
                 $this->tableDisplayService
                     ->addAction('button', '編集', 'items.edit', [
-                        'method' => 'POST',
+                        'method' => 'GET',
                         'attributes' => [
                             'class' => [
                                 'bg-blue-700',
                                 'hover:bg-blue-600',
                                 'text-white',
                                 'rounded',
-                                'px-4',
-                                'py-2',
+                                'px-2',
+                                'py-1',
                             ],
                         ],
                     ]),
@@ -65,8 +66,8 @@ class ItemController extends Controller
                                 'hover:bg-gray-600',
                                 'text-white',
                                 'rounded',
-                                'px-4',
-                                'py-2'
+                                'px-2',
+                                'py-1'
                             ],
                         ],
                         'confirm' => '削除してよろしいですか？',
@@ -114,7 +115,8 @@ class ItemController extends Controller
         // dd($request);
 
         $this->itemService->store($request->validated());
-        return redirect()->route('items.index');
+        return redirect()->route('items.index')
+                    ->with('success', '商品登録に成功しました');
     }
 
     /**
@@ -123,9 +125,9 @@ class ItemController extends Controller
      * @param $request->edit_id
      * @return void
      */
-    public function edit(Request $request): Response
+    public function edit($id): Response
     {
-        $item = $this->itemService->getById($request->edit_id);
+        $item = $this->itemService->getById($id);
         return response()->view('/items.edit', compact('item'));
     }
 
@@ -152,12 +154,12 @@ class ItemController extends Controller
      * @param [type] $id
      * @return response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
+        $id = $request->id;
         $this->itemService->remove($id);
 
-
-        return response()->redirect('items.index')
+        return redirect()->route('items.index')
                     ->with('success', '商品情報を削除しました。');
     }
 
