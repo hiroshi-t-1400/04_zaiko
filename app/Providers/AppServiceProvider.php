@@ -10,6 +10,8 @@ use App\Services\Implementations\ItemService;
 use App\Services\Contracts\TableDisplayServiceInterface;
 use App\Services\Implementations\TableDisplayService;
 use App\Enums\ItemColumn;
+use App\Services\Implementations\FormDisplayService;
+use App\Services\Contracts\FormDisplayServiceInterface;
 
 use Illuminate\Support\ServiceProvider;
 use Laravel\Prompts\Table;
@@ -32,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         //バインドする
         $this->app->bind(TableDisplayServiceInterface::class, TableDisplayService::class);
 
+        $this->app->bind(FormDisplayServiceInterface::class, FormDisplayService::class);
 
     }
 

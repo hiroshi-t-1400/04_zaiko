@@ -7,20 +7,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use App\Services\Contracts\ItemServiceInterface;
 use App\Services\Contracts\TableDisplayServiceInterface;
+use App\Services\Contracts\FormDisplayServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class ItemController extends Controller
 {
 
     public function __construct(
         private readonly ItemServiceInterface $itemService,
-        private readonly TableDisplayServiceInterface $tableDisplayService
+        private readonly TableDisplayServiceInterface $tableDisplayService,
+        private readonly FormDisplayServiceInterface $formDisplayService,
     ) {}
 
     /**
      * 商品一覧画面の表示
      *
-     * @return void
+     * @return Response
      */
     public function index(): Response
     {
@@ -75,16 +78,13 @@ class ItemController extends Controller
         ];
 
         return response()->view('items.index', compact('items', 'tableHeaders', 'options'));
-        // return response()->view('items.index', [
-        //     'table' => $this->tableDisplayService->generateTable($headers, $data, $options),
-        // ]);
     }
 
     /**
      * １件の商品を取得してビューに返す
      *
-     * @param $id
-     * @return void
+     * @param [type] $id
+     * @return Response
      */
     public function show($id): Response
     {
@@ -97,12 +97,39 @@ class ItemController extends Controller
     /**
      * 商品登録画面の表示
      *
-     * @return void
+     * @return Response
      */
     public function create(): Response
     {
-        return response()->view('items.create');
+        $viewForms = [
+            'name_ja',
+            'name_en',
+            'quantity',
+            'unit_of_measure',
+            'category_id',
+            'price',
+            'buy_date',
+            'reorder_point',
+            'safety_stock',
+            'description_ja',
+        ];
+
+        $displayInfo = $formDisplayService->setDisplayInfo($viewForms, 'items');
+
+        $submitAction = [
+                'store' => [
+                    'label' => '保存',
+                    'url' => route('items.store'),
+                ],
+                'cancel' => [
+                    'label' => 'キャンセル',
+                    'url' => route('items.index'),
+                ]
+        ];
+
+        return response()->view('items.create', compact('displayInfo', 'submitAction'));
     }
+
 
     /**
      * 商品の登録
@@ -112,8 +139,6 @@ class ItemController extends Controller
      */
     public function store(StoreItemRequest $request)
     {
-        // dd($request);
-
         $this->itemService->store($request->validated());
         return redirect()->route('items.index')
                     ->with('success', '商品登録に成功しました');
@@ -122,8 +147,8 @@ class ItemController extends Controller
     /**
      * 商品情報の変更画面の表示
      *
-     * @param $request->edit_id
-     * @return void
+     * @param string $id
+     * @return Response
      */
     public function edit($id): Response
     {
@@ -137,7 +162,7 @@ class ItemController extends Controller
      * @param UpdateItemRequest $request
      * @return $errors|Response
      */
-    public function update(UpdateItemRequest $request)
+    public function update(UpdateItemRequest $request): error|Response
     {
         $this->itemService->modify($request->validated());
         // 失敗or成功 バリデーションエラー、モデルの拒否など
@@ -160,7 +185,7 @@ class ItemController extends Controller
         $this->itemService->remove($id);
 
         return redirect()->route('items.index')
-                    ->with('success', '商品情報を削除しました。');
+                    ->with('success', '１件の商品を削除しました。');
     }
 
 }

@@ -8,12 +8,26 @@ use Illuminate\View\Component;
 
 class Input extends Component
 {
+    private $displayInfo;
+    private $submitAction;
+    private $selected;
+    private $cancelAction;
+
+
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(
+        array $displayInfo,
+        array $submitAction,
+        $selected,
+        array $cancelAction = ['url' => '#', 'label' => 'キャンセル', 'class' => ''] )
     {
-        //
+        $this->displayInfo = $displayInfo;
+        $this->submitAction = $submitAction;
+        $this->selected = $selected;
+        $this->cancelAction = $cancelAction;
     }
 
     public function isSelected(string $option): bool

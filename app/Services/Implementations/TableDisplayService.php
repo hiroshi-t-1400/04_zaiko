@@ -37,7 +37,7 @@ class TableDisplayService implements TableDisplayServiceInterface
         $this->tableName = $tableName;
         $this->tableHeaders = collect($columns)
             ->map( function ($column) {
-                $displayName = config("table_columns.{$this->tableName}.{$column}", $column);
+                $displayName = config("table_columns.{$this->tableName}.{$column}.label", $column);
                 return [
                     'column' => $column,
                     'displayName' => $displayName,

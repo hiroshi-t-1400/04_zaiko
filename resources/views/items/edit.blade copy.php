@@ -1,13 +1,8 @@
-<x-layouts.app>
+@extends('layouts.app')
 
-    <div class="main-container grid grid-cols-[minmax(min-content,_800px)] gap-4 place-content-center ">
+@section('content')
 
-        <x-title>
-            商品の編集
-        </x-title>
-
-</x-app>
-
+        <div class="main-container grid grid-cols-[minmax(min-content,_800px)] gap-4 place-content-center ">
 
             <div class="title-wrapper py-5 my-5 text-center">
                 <h1 class="font-extrabold text-5xl">ざいこ コントロール</h1>
