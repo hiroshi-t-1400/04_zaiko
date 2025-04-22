@@ -26,13 +26,15 @@ class FormDisplayService implements FormDisplayServiceInterface
                 $formType = $type;
 
                 if ($type === 'select') {
-                    $formType = ['select' => $this->setSelectForm($column)];
+                    $options = $this->setSelectForm($column);
+
                 }
 
                 return [
                     'column' => $column,
                     'displayName' => config("table_columns.{$this->tableName}.{$column}.label", $column),
                     'formType' => $formType,
+                    'options' => $options ?? '',
                 ];
             });
 

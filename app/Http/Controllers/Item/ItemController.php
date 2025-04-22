@@ -114,7 +114,7 @@ class ItemController extends Controller
             'description_ja',
         ];
 
-        $displayInfo = $formDisplayService->setDisplayInfo($viewForms, 'items');
+        $displayInfo = $this->formDisplayService->setDisplayInfo($viewForms, 'items');
 
         $submitAction = [
                 'store' => [
@@ -124,7 +124,8 @@ class ItemController extends Controller
                 'cancel' => [
                     'label' => 'キャンセル',
                     'url' => route('items.index'),
-                ]
+                ],
+                // 'method' => 'POST',
         ];
 
         return response()->view('items.create', compact('displayInfo', 'submitAction'));
