@@ -22,12 +22,14 @@ class Input extends Component
         array $displayInfo,
         array $submitAction,
         $selected,
-        array $cancelAction = ['url' => '#', 'label' => 'キャンセル', 'class' => ''] )
+        array $cancelAction = ['url' => '#', 'label' => 'キャンセル', 'class' => ''],
+        array $item)
     {
         $this->displayInfo = $displayInfo;
         $this->submitAction = $submitAction;
         $this->selected = $selected;
         $this->cancelAction = $cancelAction;
+        $this->item = $item;
     }
 
     public function isSelected(string $option): bool

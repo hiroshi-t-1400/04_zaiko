@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Item;
 
 use App\Http\Requests\StoreItemRequest;
+use App\Http\Requests\UpdateItemRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use App\Services\Contracts\ItemServiceInterface;
 use App\Services\Contracts\TableDisplayServiceInterface;
 use App\Services\Contracts\FormDisplayServiceInterface;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -153,25 +155,65 @@ class ItemController extends Controller
      */
     public function edit($id): Response
     {
+        $viewForms = [
+            'name_ja',
+            'name_en',
+            'quantity',
+            'unit_of_measure',
+            'category_id',
+            'price',
+            'buy_date',
+            'reorder_point',
+            'safety_stock',
+            'description_ja',
+        ];
+
+        $displayInfo = $this->formDisplayService->setDisplayInfo($viewForms, 'items');
+
+        $submitAction = [
+                'store' => [
+                    'label' => '変更を保存',
+                    'url' => route('items.update', $id),
+                ],
+                'cancel' => [
+                    'label' => 'キャンセル',
+                    'url' => route('items.index'),
+                ],
+                'method' => 'PUT',
+        ];
+        // データベースから編集するレコードを取得
         $item = $this->itemService->getById($id);
-        return response()->view('/items.edit', compact('item'));
+        return response()->view('/items.edit', compact('displayInfo', 'submitAction', 'item'));
     }
 
     /**
      * 商品の変更内容を保存
      *
      * @param UpdateItemRequest $request
-     * @return $errors|Response
+     * @param string $id 更新するアイテムのID(ルートパラメータから)
+     * @return RedirectResponse
      */
-    public function update(UpdateItemRequest $request): error|Response
+    public function update(UpdateItemRequest $request, $id): RedirectResponse
     {
-        $this->itemService->modify($request->validated());
-        // 失敗or成功 バリデーションエラー、モデルの拒否など
+        $validatedData = $request->validated();
+        $id = intval($id);
 
+        // modifyサービスを呼び出してupdateを試みる
+        $affectiveRows = $this->itemService->modify($id, $validatedData);
 
-        // 成功したとき
-        return response()->redirect('items.index')
-                    ->with('success', '商品情報を変更しました。');
+        if ( $affectiveRows > 0 ) {
+            // 成功したとき
+            return redirect()->route('items.index')
+                        ->with('success', '商品情報を変更しました。');
+        } elseif ( $affectiveRows === 0 ) {
+            // 失敗したとき
+            return redirect()->route('items.edit', $id)
+                        ->with('warning', '商品情報に変更はありませんでした。');
+        } else {
+            // 失敗したとき 例外処理
+            return redirect()->route('items.edit', $id)
+                        ->with('error', '商品情報の変更に失敗しました。');
+        }
     }
 
     /**

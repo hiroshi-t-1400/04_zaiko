@@ -42,11 +42,17 @@ class ItemRepository implements ItemRepositoryInterface
     /**
      * レコード修正
      *
-     * @return bool
+     * @param array $itemData
+     * @return int
+     * @throws \InvaildArgumentException $itemにidキーがない場合
      */
-    public function modify(array $item): bool
+    public function modify(int $id, array $updateValues): int
     {
-        return Item::update($item);
+        if (empty($updateValues)) {
+            return 0; // nothig is updated
+        }
+
+        return Item::where('id', $id)->update($updateValues);
     }
 
     /**

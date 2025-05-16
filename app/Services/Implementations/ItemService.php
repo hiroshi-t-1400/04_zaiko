@@ -56,12 +56,14 @@ class ItemService implements ItemServiceInterface
     /**
      * １件の商品を更新
      *
-     * @param [type] $id
-     * @return boolean
+     * @param int $id
+     * @param $updateValues
+     * @return Integer
+     * @throws \InvaildArgumentException $itemにidキーがない場合
      */
-    public function modify($id): bool
+    public function modify(int $id, array $updateValues): int
     {
-        return $this->itemRepository->modify($id);
+        return $this->itemRepository->modify($id, $updateValues);
     }
 
     /**

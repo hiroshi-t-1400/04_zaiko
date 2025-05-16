@@ -18,9 +18,11 @@
                     <td  class="border border-gray-500 px-3">{{ $cell }}</td>
                 @endforeach
 
+                {{-- 操作ボタンをレンダする --}}
                 @if(!empty($options))
                     @foreach($options as $key => $action)
                         <td class="border border-gray-500 px-3">
+                            {{-- 渡されたオプションにしたがってボタン・リンクを表示する --}}
                             @if ($action['type'] === 'link')
                                 <a href="{{ $action['url']($row) }}" class="{{ $action['attributes']['class'] }}" >{{ $action['label'] }}</a>
                             @elseif ($action['type'] === 'button')

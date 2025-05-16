@@ -4,7 +4,7 @@
     <form action="{{ $submitAction['store']['url'] }}" method="POST" class="{{-- classes['formWrap'] --}}">
             @csrf
             @method( $submitAction['method'] ?? 'POST' )
-
+            
             <table class="table-auto border-0 w-full">
                 <colgroup>
                     <col class="w-48" />
@@ -14,22 +14,27 @@
                 <tbody>
                     @foreach ($displayInfo as $form)
                         <tr>
+                            {{-- フォームのラベルをレンダする --}}
                             <td class="border-0 p-3 text-end ">
                                 <label for="{{ $form['column'] }}" class="text-xl">{{ $form['displayName'] }}</label>
                             </td>
+                            {{-- フォームをレンダする --}}
                             <td class="border-0">
                                 @if ( $form['formType'] === 'select' )
                                     <select name="{{ $form['column'] }}" id="{{ $form['column'] }}" class="rounded-sm outline-1 outline-gray-600 w-full p-1" >
-                                        @foreach($form['options'] as $value => $label)
-                                            <option value="{{ $value }}" >{{ $label }}</option>
+                                        @foreach($form['options'] as $optionValue => $label)
+                                            <option value="{{ $optionValue }}"
+                                                {{-- データベースの値と一致する場合は選択状態にする --}}
+                                                @selected(old($form['column'], $item[$form['column']] ?? null) == $optionValue)
+                                            >{{ $label }}</option>
                                         @endforeach
                                     </select>
 
                                 @elseif ( $form['formType'] === 'textarea' )
-                                    <textarea name="{{ $form['column'] }}" id="{{ $form['column'] }}" cols="100" rows="5" class="rounded-sm outline-1 outline-gray-600 w-full p-1" ></textarea>
+                                    <textarea name="{{ $form['column'] }}" id="{{ $form['column'] }}" cols="100" rows="5" class="rounded-sm outline-1 outline-gray-600 w-full p-1" >{{ old($form['column'], $item[$form['column']] ?? null ) }}</textarea>
 
                                 @else
-                                    <input type="{{ $form['formType'] }}" name="{{ $form['column'] }}" id="{{ $form['column'] }}" class="rounded-sm outline-1 outline-gray-600 w-full p-1" value="{{ old($form['column']) ?? $recordValue ?? null }}"
+                                    <input type="{{ $form['formType'] }}" name="{{ $form['column'] }}" id="{{ $form['column'] }}" class="rounded-sm outline-1 outline-gray-600 w-full p-1" value="{{ old($form['column'], $item[$form['column']] ?? null ) }}"
                                         @if ($loop->first)
                                             autofocus
                                         @endif
