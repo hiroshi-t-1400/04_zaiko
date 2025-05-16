@@ -5,33 +5,48 @@
             @csrf
             @method( $submitAction['method'] ?? 'POST' )
 
-            @foreach ($displayInfo as $form)
-                <div class="{{-- classes['card'] --}} py-2 px-4 m-0.5 mb-4">
-                    <label for="{{ $form['column'] }}" class="{{-- $labelClass font-semibold text-xl --}}">{{ $form['displayName'] }}</label>
-                    @if ( $form['formType'] === 'select' )
-                        <select name="{{ $form['column'] }}" id="{{ $form['column'] }}" class=" font-semibold text-xl rounded-xl outline-2 outline-gray-600 py-2 px-4 m-0.5 mb-4 " value="カテゴリ" >
-                            @foreach($form['options'] as $value => $label)
-                                <option value="{{ $value }}" >{{ $label }}</option>
-                            @endforeach
-                        </select>
+            <table class="table-auto border-0 w-full">
+                <colgroup>
+                    <col class="w-48" />
+                    <col />
+                </colgroup>
 
-                    @elseif ( $form['formType'] === 'textarea' )
+                <tbody>
+                    @foreach ($displayInfo as $form)
+                        <tr>
+                            <td class="border-0 p-3 text-end ">
+                                <label for="{{ $form['column'] }}" class="text-xl">{{ $form['displayName'] }}</label>
+                            </td>
+                            <td class="border-0">
+                                @if ( $form['formType'] === 'select' )
+                                    <select name="{{ $form['column'] }}" id="{{ $form['column'] }}" class="rounded-sm outline-1 outline-gray-600 w-full p-1" >
+                                        @foreach($form['options'] as $value => $label)
+                                            <option value="{{ $value }}" >{{ $label }}</option>
+                                        @endforeach
+                                    </select>
 
-                    @else
-                        <input type="{{ $form['formType'] }}" name="{{ $form['column'] }}" id="{{ $form['column'] }}" class="{{-- $inputClass --}} rounded-sm outline-2 outline-gray-600" value="{{ old($form['column']) ?? $recordValue ?? null }}"
-                            @if ($loop->first)
-                                autofocus
-                            @endif
-                        >
-                    @endif
-                </div>
+                                @elseif ( $form['formType'] === 'textarea' )
+                                    <textarea name="{{ $form['column'] }}" id="{{ $form['column'] }}" cols="100" rows="5" class="rounded-sm outline-1 outline-gray-600 w-full p-1" ></textarea>
+
+                                @else
+                                    <input type="{{ $form['formType'] }}" name="{{ $form['column'] }}" id="{{ $form['column'] }}" class="rounded-sm outline-1 outline-gray-600 w-full p-1" value="{{ old($form['column']) ?? $recordValue ?? null }}"
+                                        @if ($loop->first)
+                                            autofocus
+                                        @endif
+                                    >
+                                @endif
+                            </td>
+                        </tr>
+
+                    @endforeach
+                </tbody>
+            </table>
 
 
-                @endforeach
-
-            {{-- POSTのみ --}}
-            <button type="submit" class="{{-- actionClass --}} rounded-xl  w-32 h-10 ms-30 ring-2 ring-blue-500 bg-blue-600 font-extrabold text-gray-200 text-3xl" >{{ $submitAction['store']['label'] }}</button>
-            <a href="{{ $submitAction['cancel']['url'] }}" class="" >{{ $submitAction['cancel']['label'] }}</a>
+            <div class="flex justify-evenly p-3">
+                <button type="submit" class="{{-- actionClass --}} rounded-sm  w-24 h-8 ring-2 ring-blue-500 bg-blue-600 font-semibold text-gray-200 text-xl" >{{ $submitAction['store']['label'] }}</button>
+                <a href="{{ $submitAction['cancel']['url'] }}" class="inline-block" >{{ $submitAction['cancel']['label'] }}</a>
+            </div>
     </form>
 </div>
 
