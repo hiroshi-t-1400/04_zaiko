@@ -8,7 +8,7 @@ return [
         'quantity' => ['label' => '数量', 'type' => 'text'],
         'unit_of_measure' => ['label' => '単位', 'type' => 'text'],
         'buy_date' => ['label' => '購入日', 'type' => 'date'],
-        'price' => ['label' => '価格', 'type' => 'text'],
+        'price' => ['label' => '価格(円)', 'type' => 'text'],
         'category_id' => ['label' => 'カテゴリー', 'type' => 'select'],
         'name_en' => ['label' => '商品名(英語)', 'type' => 'text'],
         'reorder_point' => ['label' => '買い足し閾値', 'type' => 'number'],

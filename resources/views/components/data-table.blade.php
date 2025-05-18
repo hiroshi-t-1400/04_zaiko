@@ -14,6 +14,7 @@
     <tbody>
         @foreach ($items as $row)
             <tr>
+                {{-- テーブルの値をレンダする --}}
                 @foreach($row as $cell)
                     <td  class="border border-gray-500 px-3">{{ $cell }}</td>
                 @endforeach

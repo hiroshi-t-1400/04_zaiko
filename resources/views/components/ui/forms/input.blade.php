@@ -4,7 +4,7 @@
     <form action="{{ $submitAction['store']['url'] }}" method="POST" class="{{-- classes['formWrap'] --}}">
             @csrf
             @method( $submitAction['method'] ?? 'POST' )
-            
+
             <table class="table-auto border-0 w-full">
                 <colgroup>
                     <col class="w-48" />
@@ -30,8 +30,12 @@
                                         @endforeach
                                     </select>
 
+
                                 @elseif ( $form['formType'] === 'textarea' )
                                     <textarea name="{{ $form['column'] }}" id="{{ $form['column'] }}" cols="100" rows="5" class="rounded-sm outline-1 outline-gray-600 w-full p-1" >{{ old($form['column'], $item[$form['column']] ?? null ) }}</textarea>
+
+                                @elseif ( $form['formType'] === 'date' )
+                                    <input type="{{ $form['formType'] }}" name="{{ $form['column'] }}" id="{{ $form['column'] }}" class="rounded-sm outline-1 outline-gray-600 w-full p-1" value="{{ old($form['column'], \Carbon\Carbon::parse($item[$form['column']])->format('Y-m-d') ?? null ) }}">
 
                                 @else
                                     <input type="{{ $form['formType'] }}" name="{{ $form['column'] }}" id="{{ $form['column'] }}" class="rounded-sm outline-1 outline-gray-600 w-full p-1" value="{{ old($form['column'], $item[$form['column']] ?? null ) }}"
@@ -39,6 +43,7 @@
                                             autofocus
                                         @endif
                                     >
+
                                 @endif
                             </td>
                         </tr>

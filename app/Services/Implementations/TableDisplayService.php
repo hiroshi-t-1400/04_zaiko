@@ -144,6 +144,9 @@ class TableDisplayService implements TableDisplayServiceInterface
             foreach ($headers as $header) {
                     $row['id'] = $data['id'];
                     $row[$header['column']] = $data[$header['column']];
+                        if ($header['column'] === 'buy_date') {
+                            $row[$header['column']] = $data->getFormattedBuyDateAttribute();
+                        }
             }
             return $row;
         });

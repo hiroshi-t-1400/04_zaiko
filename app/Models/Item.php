@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Item extends Model
 {
@@ -23,4 +24,14 @@ class Item extends Model
         'img_path',
         'like_count',
     ];
+
+    protected $casts = [
+        'buy_date' => 'datetime',
+    ];
+
+    public function getFormattedBuyDateAttribute(): ?string
+    {
+        return $this->buy_date?->format('Y-m-d');
+    }
+
 }
