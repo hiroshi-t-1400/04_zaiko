@@ -39,4 +39,16 @@ class StoreItemRequest extends FormRequest
             'like_count' => 'nullable|integer|between:0,10',
         ];
     }
+
+    /**
+     * 入力フォームのバリデーションエラーメッセージ
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'price.regex' => ':attributeは整数８桁、小数点以下２桁の数字を入力してください。',
+        ];
+    }
 }
