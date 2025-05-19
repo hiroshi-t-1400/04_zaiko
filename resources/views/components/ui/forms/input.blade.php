@@ -20,6 +20,10 @@
                             </td>
                             {{-- フォームをレンダする --}}
                             <td class="border-0">
+
+                                @error( $form['column'] )
+                                    <div class="error text-sm text-red-800">{{ $message }}</div>
+                                @enderror
                                 @if ( $form['formType'] === 'select' )
                                     <select name="{{ $form['column'] }}" id="{{ $form['column'] }}" class="rounded-sm outline-1 outline-gray-600 w-full p-1" >
                                         @foreach($form['options'] as $optionValue => $label)
@@ -32,13 +36,13 @@
 
 
                                 @elseif ( $form['formType'] === 'textarea' )
-                                    <textarea name="{{ $form['column'] }}" id="{{ $form['column'] }}" cols="100" rows="5" class="rounded-sm outline-1 outline-gray-600 w-full p-1" >{{ old($form['column'], $item[$form['column']] ?? null ) }}</textarea>
+                                    <textarea name="{{ $form['column'] }}" id="{{ $form['column'] }}" cols="100" rows="5" class="rounded-sm outline-1 outline-gray-600 w-full p-1" >{{ old($form['column'], isset($item[$form['column']]) ? $item[$form['column']] : '' ) }}</textarea>
 
                                 @elseif ( $form['formType'] === 'date' )
-                                    <input type="{{ $form['formType'] }}" name="{{ $form['column'] }}" id="{{ $form['column'] }}" class="rounded-sm outline-1 outline-gray-600 w-full p-1" value="{{ old($form['column'], \Carbon\Carbon::parse($item[$form['column']])->format('Y-m-d') ?? null ) }}">
+                                    <input type="{{ $form['formType'] }}" name="{{ $form['column'] }}" id="{{ $form['column'] }}" class="rounded-sm outline-1 outline-gray-600 w-full p-1" value="{{ old($form['column'], isset($item[$form['column']]) ? \Carbon\Carbon::parse($item[$form['column']])->format('Y-m-d') : '' ) }}">
 
                                 @else
-                                    <input type="{{ $form['formType'] }}" name="{{ $form['column'] }}" id="{{ $form['column'] }}" class="rounded-sm outline-1 outline-gray-600 w-full p-1" value="{{ old($form['column'], $item[$form['column']] ?? null ) }}"
+                                    <input type="{{ $form['formType'] }}" name="{{ $form['column'] }}" id="{{ $form['column'] }}" class="rounded-sm outline-1 outline-gray-600 w-full p-1" value="{{ old( $form['column'], isset($item[$form['column']]) ? $item[$form['column']] : '' ) }}"
                                         @if ($loop->first)
                                             autofocus
                                         @endif

@@ -32,6 +32,8 @@ class Input extends Component
         $this->item = $item;
     }
 
+
+
     public function isSelected(string $option): bool
     {
         return $option === $this->selected;
