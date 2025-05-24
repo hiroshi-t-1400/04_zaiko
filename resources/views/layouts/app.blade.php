@@ -28,6 +28,10 @@
         <div class="main-part">
             @yield('content')
 
+            {{-- 暫定的に、breezeによるprofileからの呼び出しに対応するため --}}
+            @if (isset($slot))
+                {{ $slot }}
+            @endif
         </div>
 
 
