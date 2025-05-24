@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Item\ItemController;
-use App\Http\Controllers\TestController;
-use PHPUnit\Event\Code\Test;
 
 Route::get('/items/index', [ItemController::class, 'index'])->name('items.index');
 
@@ -20,4 +18,3 @@ Route::get('/cindex', function () {
     return view('items.cindex');
 });
 
-Route::get('/items/totest', [TestController::class, 'run'])->name('items.test');
