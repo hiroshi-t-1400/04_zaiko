@@ -4,7 +4,8 @@
 
     <div class="user-show-wrapper font-semibold text-center">
         <div>ユーザー名</div>
-        <a href="" class="font-bold">テック太郎</a>
+        {{-- <a href="route('profile.edit')" class="font-bold">テック太郎</a> --}}
+        <a href="{{ route('profile.edit') }}" class="font-bold">{{ Auth::user()->name }}</a>
     </div>
 
     @foreach ($navigationLinks as $link)
