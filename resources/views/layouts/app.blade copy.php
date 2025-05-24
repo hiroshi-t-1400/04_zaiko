@@ -14,24 +14,25 @@
         <!-- Scripts -->
         <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+    </head>
+    <body class="font-sans antialiased">
+        <div class="min-h-screen bg-gray-100">
+            @include('layouts.navigation')
 
-</head>
-<body>
+            <!-- Page Heading -->
+            @isset($header)
+                <header class="bg-white shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endisset
 
-    <div class="isorate grid grid-cols-[minmax(auto,_200px)_auto] grid-rows-1">
-
-        <div id="sidebar" class="side-part 100vh bg-orange-400 ">
-            @include('common.sidebar')
+            <!-- Page Content -->
+            <main>
+                {{ $slot }}
+            </main>
         </div>
-
-
-        <div class="main-part">
-            @yield('content')
-
-        </div>
-
-
-    </div>
-
-</body>
+    </body>
 </html>
