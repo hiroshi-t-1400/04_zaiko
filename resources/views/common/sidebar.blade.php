@@ -19,12 +19,5 @@
         <a href="{{ route('home') }}">ホーム画面</a>
     </div>
 
-    <div class="nav-wrapper grid gap-2">
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit">{{ __('Log Out') }}</button>
-        </form>
-    </div>
-
 
 </div>

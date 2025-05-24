@@ -17,9 +17,7 @@ return new class extends Migration
             $table->string('name_en', 255)->nullable();
             $table->unsignedInteger('quantity')->default(0);
             $table->string('unit_of_measure', 10); // 単位：個、箱、kg
-            // $table->decimal('category_id', 5, 0)->nullable()->index(); // 原料、完成品etc
-            // $table->foreignId('category_id')->decimal()->index()->constrained()->onDelete('cascade'); // 原料、完成品etc
-            $table->foreignId('category_id')->constrained()->onDelete('cascade'); // 原料、完成品etc
+            $table->decimal('category_id', 5, 0)->nullable()->index(); // 原料、完成品etc
             $table->decimal('price', 10, 2)->default(0);
             $table->timestamp('buy_date')->nullable()->index(); // 購入日
             $table->unsignedInteger('reorder_point')->nullable(); // 再購入をするボーダーライン
